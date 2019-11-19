@@ -33,8 +33,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,7 @@ import butterknife.OnClick;
  */
 
 public class USBCameraActivity extends AppCompatActivity implements CameraDialog.CameraDialogParent{
+    private static final String TAG = "USBCameraActivity_TAG";
     @BindView(R.id.camera_view)
     public View mTextureView;
     @BindView(R.id.btn_capture_pic)
@@ -123,7 +127,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.e("GGGGG", "action: " + action);
+            Log.e(TAG, "action: " + action);
             if (action.equals("com.runbo.ptt.key.down")) {
                 videoRecord();
             } else if (action.equals("com.runbo.usb.camera.connected")) {
@@ -152,6 +156,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usbcamera);
         ButterKnife.bind(this);
+        mBtnRecord.setImageResource(R.mipmap.ic_switch_to_video_sprd);
         mUVCCameraView = (CameraViewInterface) mTextureView;
         // 初始化引擎
         mUSBManager = USBCameraManager.getInstance();
@@ -188,12 +193,16 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         }
 
         if(! mUSBManager.isRecording()){
-            String videoPath = USBCameraManager.ROOT_PATH+System.currentTimeMillis();
+            //String videoPath = USBCameraManager.ROOT_PATH+System.currentTimeMillis();
+            String videoPath = getPath();
+            Log.e(TAG, "videoPath: " + videoPath);
             FileUtils.createfile(FileUtils.ROOT_PATH+"test666.h264");
             RecordParams params = new RecordParams();
             params.setRecordPath(videoPath);
             params.setRecordDuration(0);    // 设置为0，不分割保存
             params.setVoiceClose(false);    // 不屏蔽声音
+            mBtnRecord.setImageResource(R.mipmap.shutter_button_video);
+            showShortMsg(getString(R.string.record_start));
             mUSBManager.startRecording(params, new AbstractUVCCameraHandler.OnEncodeResultListener() {
                 @Override
                 public void onEncodeResult(byte[] data, int offset, int length, long timestamp, int type) {
@@ -207,11 +216,13 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 @Override
                 public void onRecordResult(String videoPath) {
                     showShortMsg(videoPath);
+                    mBtnRecord.setImageResource(R.mipmap.ic_switch_to_video_sprd);
                 }
             });
         } else {
             FileUtils.releaseFile();
             mUSBManager.stopRecording();
+            mBtnRecord.setImageResource(R.mipmap.ic_switch_to_video_sprd);
         }
     }
 
@@ -275,7 +286,8 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                     showShortMsg("抓拍异常，摄像头未开启");
                     return;
                 }
-                String picPath = USBCameraManager.ROOT_PATH+System.currentTimeMillis()
+                //String picPath = USBCameraManager.ROOT_PATH+System.currentTimeMillis()
+                String picPath = getPath()
                         +USBCameraManager.SUFFIX_PNG;
                 mUSBManager.capturePicture(picPath, new AbstractUVCCameraHandler.OnCaptureListener() {
                     @Override
@@ -288,6 +300,38 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 videoRecord();
                 break;
         }
+    }
+
+    public String getPath() {
+        String path = USBCameraManager.ROOT_PATH + "HdmiToUsb/" + getDate() + "/";
+        File file = new File(path);
+        if (!file.exists()) {
+            boolean flag = file.mkdirs();
+            Log.e(TAG, "flag: " + flag);
+            if (!flag) {
+                path = USBCameraManager.ROOT_PATH + System.currentTimeMillis();
+            } else {
+                path = path + getTime();
+            }
+        } else {
+            path = path + getTime();
+        }
+
+        return path;
+    }
+
+    public String getDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        Date date = new Date(System.currentTimeMillis());
+
+        return  format.format(date);
+    }
+
+    public String getTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH_mm_ss", Locale.CHINA);
+        Date date = new Date(System.currentTimeMillis());
+
+        return  format.format(date);
     }
 
     @Override
