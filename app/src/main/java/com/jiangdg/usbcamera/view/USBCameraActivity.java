@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jiangdg.usbcamera.FileUtils;
@@ -49,9 +50,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
     @BindView(R.id.camera_view)
     public View mTextureView;
     @BindView(R.id.btn_capture_pic)
-    public Button mBtnCapture;
+    public ImageView mBtnCapture;
     @BindView(R.id.btn_rec_video)
-    public Button mBtnRecord;
+    public ImageView mBtnRecord;
     @BindView(R.id.btn_update_resolution)
     public Button mBtnUpdateResultion;
     @BindView(R.id.btn_restart_camera)
@@ -208,12 +209,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                     showShortMsg(videoPath);
                 }
             });
-
-            mBtnRecord.setText("正在录制");
         } else {
             FileUtils.releaseFile();
             mUSBManager.stopRecording();
-            mBtnRecord.setText("开始录制");
         }
     }
 

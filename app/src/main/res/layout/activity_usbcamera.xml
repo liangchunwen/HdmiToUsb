@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="对比度调整" />
+        android:text="对比度调整"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_brightness"
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="亮度调整" />
+        android:text="亮度调整"
+        android:visibility="gone"/>
 
     <com.serenegiant.usb.widget.UVCCameraTextureView
         android:id="@+id/camera_view"
@@ -30,25 +32,26 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_capture_pic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="抓拍"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@null"
+        android:background="@mipmap/ic_switch_to_camera_sprd"
         android:textSize="16sp" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_rec_video"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btn_capture_pic"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="开始录制"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="90dp"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@null"
+        android:background="@mipmap/ic_switch_to_video_sprd"
         android:textSize="16sp" />
 
     <Button
@@ -59,7 +62,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="切换分辨率为320x240"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_restart_camera"
@@ -69,6 +73,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="重启摄像头"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>
