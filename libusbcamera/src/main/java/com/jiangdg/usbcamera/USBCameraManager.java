@@ -30,14 +30,14 @@ public class USBCameraManager{
     public static final String SUFFIX_PNG = ".png";
     public static final String SUFFIX_MP4 = ".mp4";
     private static final String TAG = "USBCameraManager";
-    private int previewWidth = 640;
-    private int previewHeight = 480;
+    private int previewWidth = 1280;
+    private int previewHeight = 720;
     public static int MODE_BRIGHTNESS = UVCCamera.PU_BRIGHTNESS;
     public static int MODE_CONTRAST = UVCCamera.PU_CONTRAST;
     // 使用MediaVideoBufferEncoder
     private static final int ENCODER_TYPE = 2;
     //0为YUYV，1为MJPEG
-    private static final int PREVIEW_FORMAT = 0;
+    private static final int PREVIEW_FORMAT = 1;
 
     private static USBCameraManager mUsbCamManager;
     // USB设备管理类

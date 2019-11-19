@@ -40,15 +40,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UVCCamera {
-	private static final boolean DEBUG = false;	// TODO set false when releasing
+	private static final boolean DEBUG = true;	// TODO set false when releasing
 	private static final String TAG = UVCCamera.class.getSimpleName();
 	private static final String DEFAULT_USBFS = "/dev/bus/usb";
 
-	public static final int DEFAULT_PREVIEW_WIDTH = 640;
-	public static final int DEFAULT_PREVIEW_HEIGHT = 480;
+	public static final int DEFAULT_PREVIEW_WIDTH = 1280;
+	public static final int DEFAULT_PREVIEW_HEIGHT = 720;
 	public static final int DEFAULT_PREVIEW_MODE = 0;
 	public static final int DEFAULT_PREVIEW_MIN_FPS = 1;
-	public static final int DEFAULT_PREVIEW_MAX_FPS = 30;
+	public static final int DEFAULT_PREVIEW_MAX_FPS = 60;
 	public static final float DEFAULT_BANDWIDTH = 1.0f;
 
 	public static final int FRAME_FORMAT_YUYV = 0;
@@ -343,6 +343,7 @@ public class UVCCamera {
 			mCurrentFrameFormat = frameFormat;
 			mCurrentWidth = width;
 			mCurrentHeight = height;
+			Log.e(TAG, "width: " + width + "   height: " + height);
 			mCurrentBandwidthFactor = bandwidthFactor;
 		}
 	}

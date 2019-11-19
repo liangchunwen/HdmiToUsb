@@ -29,7 +29,7 @@ import java.util.Date;
  */
 
 public class AACEncodeConsumer extends Thread{
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String TAG = "TMPU";
     private static final String MIME_TYPE = "audio/mp4a-latm";
     private static final long TIMES_OUT = 1000;

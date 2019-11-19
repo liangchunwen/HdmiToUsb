@@ -430,6 +430,7 @@ public  abstract class AbstractUVCCameraHandler extends Handler {
 			super("CameraThread");
 			mHandlerClass = clazz;
 			mEncoderType = encoderType;
+			Log.e(TAG, "width: " + width + "   height: " + height);
 			mWidth = width;
 			mHeight = height;
 			mPreviewMode = format;
@@ -532,7 +533,7 @@ public  abstract class AbstractUVCCameraHandler extends Handler {
 			if (DEBUG) Log.v(TAG_THREAD, "handleStartPreview:");
 			if ((mUVCCamera == null) || mIsPreviewing) return;
 			try {
-				mUVCCamera.setPreviewSize(mWidth, mHeight, 1, 31, mPreviewMode, mBandwidthFactor);
+				mUVCCamera.setPreviewSize(mWidth, mHeight, 1, 60, mPreviewMode, mBandwidthFactor);
 				if(mPreviewListener != null){
 					mPreviewListener.onPreviewResult(true);
 				}
@@ -663,7 +664,7 @@ public  abstract class AbstractUVCCameraHandler extends Handler {
 			if (params == null)
 				throw new NullPointerException("RecordParams can not be null!");
 			// 获取USB Camera预览数据
-			mUVCCamera.setFrameCallback(mIFrameCallback, UVCCamera.PIXEL_FORMAT_NV21);
+			mUVCCamera.setFrameCallback(mIFrameCallback, UVCCamera.FRAME_FORMAT_MJPEG);
 			// 初始化混合器
 			videoPath = params.getRecordPath();
 			mMuxer = new Mp4MediaMuxer(params.getRecordPath(),
